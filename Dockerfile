@@ -14,8 +14,7 @@ RUN --mount=type=bind,source=composer.json,target=composer.json \
 
 FROM php:8.2-apache as final
 
-RUN docker-php-ext-install pdo pdo_mysql
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable mysqli
 
 COPY --from=deps app/vendor/ /var/www/html/vendor
 
